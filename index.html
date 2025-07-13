@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>SiiP Store Marketplace</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Arial', sans-serif;
+      background-color: #0d0d0d;
+      color: #fff;
+    }
+
+    .header-bar {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 16px;
+      font-size: 20px;
+      font-weight: bold;
+      background-color: #0d0d0d;
+    }
+
+    .header-bar img {
+      width: 40px;
+      height: 40px;
+      object-fit: cover;
+      border-radius: 8px;
+    }
+
+    .welcome-bar {
+      background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+      padding: 10px 20px;
+      margin: 10px 16px 16px;
+      border-radius: 8px;
+      max-width: 90%;
+      overflow: hidden;
+    }
+
+    .welcome-text {
+      display: inline-block;
+      white-space: nowrap;
+      animation: welcomeScroll 18s ease-in-out infinite;
+      font-weight: bold;
+      font-size: 14px;
+      color: white;
+    }
+
+    @keyframes welcomeScroll {
+      0% { transform: translateX(100%); opacity: 0; }
+      10% { opacity: 1; }
+      90% { opacity: 1; }
+      100% { transform: translateX(-100%); opacity: 0; }
+    }
+
+    .slider-wrapper {
+      padding: 0 16px;
+    }
+
+    .slider {
+      width: 100%;
+      overflow: hidden;
+    }
+
+    .slide {
+      position: relative;
+      width: 100%;
+      padding-top: 56.25%;
+      display: none;
+    }
+
+    .slide:first-child {
+      display: block;
+    }
+
+    .slide img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      border-radius: 12px;
+    }
+
+    .slider-controls {
+      text-align: center;
+      margin: 8px 0 14px;
+    }
+
+    .slider-controls button {
+      background: rgba(3, 169, 244, 0.2);
+      color: white;
+      border: 1px solid #03a9f4;
+      font-size: 18px;
+      padding: 4px 10px;
+      margin: 0 6px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .slider-controls button:hover {
+      background: #03a9f4;
+    }
+
+    .dots {
+      text-align: center;
+      margin: 10px 0;
+    }
+
+    .dot {
+      display: inline-block;
+      width: 10px;
+      height: 10px;
+      margin: 0 4px;
+      background-color: #888;
+      border-radius: 50%;
+      cursor: pointer;
+    }
+
+    .dot.active {
+      background-color: #03a9f4;
+    }
+
+    .testimoni-btn {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin: 16px 0;
+      gap: 12px;
+    }
+
+    .testimoni-btn a {
+      background: #03a9f4;
+      color: white;
+      padding: 10px 24px;
+      border-radius: 12px;
+      font-weight: bold;
+      text-decoration: none;
+      width: 200px;
+      text-align: center;
+    }
+
+    .tab-container {
+      display: flex;
+      overflow-x: auto;
+      gap: 10px;
+      padding: 10px;
+    }
+
+    .tab {
+      background-color: #1c1c1c;
+      color: #ccc;
+      padding: 6px 14px;
+      border-radius: 999px;
+      font-size: 14px;
+      white-space: nowrap;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    .tab.active {
+      background-color: #03a9f4;
+      color: #fff;
+    }
+
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      padding: 14px;
+    }
+
+    .product-item {
+      background-color: #1c1c1c;
+      border-radius: 12px;
+      text-align: center;
+      overflow: hidden;
+      color: #fff;
+      text-decoration: none;
+      font-size: 13px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+      transition: transform 0.2s;
+    }
+
+    .product-item:hover {
+      transform: scale(1.02);
+    }
+
+    .product-item img {
+      width: 100%;
+      aspect-ratio: 1/1;
+      border-radius: 12px 12px 0 0;
+      object-fit: cover;
+      background: #333;
+      box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+      border: 2px solid #444;
+    }
+
+    .product-item:hover img {
+      border-color: #03a9f4;
+    }
+
+    .product-item h3 {
+      margin: 8px 0 4px;
+      font-size: 15px;
+      font-weight: bold;
+      color: white;
+    }
+
+    .product-category {
+      font-size: 12px;
+      color: #ccc;
+      margin-bottom: 4px;
+    }
+
+    .status {
+      margin-bottom: 10px;
+      padding: 4px 10px;
+      font-size: 11px;
+      font-weight: bold;
+      border-radius: 999px;
+      display: inline-block;
+    }
+
+    .status.tersedia { background-color: #03a9f4; color: white; }
+    .status.habis { background-color: #d50000; color: white; }
+    .status.tidak-tersedia { background-color: #ff9100; color: white; }
+
+    .footer {
+      text-align: center;
+      color: #888;
+      font-size: 13px;
+      margin: 30px 0 20px;
+    }
+
+    @media (max-width: 768px) {
+      .product-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 480px) {
+      .product-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="header-bar">
+  <img src="logo.jpg" alt="Logo SiiP">
+  SiiP Store Marketplace
+</div>
+
+<div class="welcome-bar">
+  <div class="welcome-text">Selamat Datang Di SiiP Store Marketplace  -  Jika Ingin Bertanya Bisa Hubungi WhatsApp 083189341353</div>
+</div>
+
+<div class="slider-wrapper">
+  <div class="slider" id="slider-container">
+    <div class="slide"><img src="slider1.jpg" alt="Slide 1"></div>
+    <div class="slide"><img src="slider2.jpg" alt="Slide 2"></div>
+    <div class="slide"><img src="slider3.jpg" alt="Slide 3"></div>
+  </div>
+</div>
+
+<div class="slider-controls">
+  <button onclick="moveSlide(currentSlide - 1)">&lt;</button>
+  <button onclick="moveSlide(currentSlide + 1)">&gt;</button>
+</div>
+
+<div class="dots">
+  <span class="dot active" onclick="moveSlide(0)"></span>
+  <span class="dot" onclick="moveSlide(1)"></span>
+  <span class="dot" onclick="moveSlide(2)"></span>
+</div>
+
+<div class="testimoni-btn">
+  <a href="sosmed.html">Suntik Sosmed</a>
+  <a href="https://whatsapp.com/channel/0029Vb65XqWJkK7CPJYixz2n" target="_blank">Lihat Testimoni</a>
+</div>
+
+<div class="tab-container">
+  <div class="tab active" data-filter="all">Semua</div>
+  <div class="tab" data-filter="app">App Prem</div>
+  <div class="tab" data-filter="nokos">Nokos</div>
+  <div class="tab" data-filter="unban">Unban Wa</div>
+  <div class="tab" data-filter="domain">Domain</div>
+  <div class="tab" data-filter="bug">Bug Wa</div>
+</div>
+
+<div class="product-grid">
+  <a href="youtube.html" class="product-item" data-category="app">
+    <img src="youtube.jpg" alt="YouTube">
+    <h3>YouTube</h3>
+    <div class="product-category">App Premium</div>
+    <div class="status tersedia">Tersedia</div>
+  </a>
+  <a href="canva.html" class="product-item" data-category="app">
+    <img src="canva.jpg" alt="Canva">
+    <h3>Canva</h3>
+    <div class="product-category">App Premium</div>
+    <div class="status tersedia">Tersedia</div>
+  </a>
+  <a href="viu.html" class="product-item" data-category="app">
+    <img src="viu.jpg" alt="Viu">
+    <h3>Viu</h3>
+    <div class="product-category">App Premium</div>
+    <div class="status tersedia">Tersedia</div>
+  </a>
+  <a href="capcut.html" class="product-item" data-category="app">
+    <img src="cc.jpg" alt="CapCut">
+    <h3>CapCut</h3>
+    <div class="product-category">App Premium</div>
+    <div class="status tersedia">Tersedia</div>
+  </a>
+  <a href="alightmotion.html" class="product-item" data-category="app">
+    <img src="am.jpg" alt="Alight Motion">
+    <h3>Alight Motion</h3>
+    <div class="product-category">App Premium</div>
+    <div class="status tersedia">Tersedia</div>
+  </a>
+  <a href="netflix.html" class="product-item" data-category="app">
+    <img src="nf.jpg" alt="Netflix">
+    <h3>Netflix</h3>
+    <div class="product-category">App Premium</div>
+    <div class="status tersedia">Tersedia</div>
+  </a>
+  <a href="nokoswa.html" class="product-item" data-category="nokos">
+    <img src="nokos.jpg" alt="Nokos WhatsApp">
+    <h3>Nokos WhatsApp</h3>
+    <div class="product-category">Nokos</div>
+    <div class="status habis">Stok Habis</div>
+  </a>
+  <a href="domain.html" class="product-item" data-category="domain">
+    <img src="domain.jpg" alt="Domain">
+    <h3>Domain</h3>
+    <div class="product-category">Domain</div>
+    <div class="status tidak-tersedia">Tidak Tersedia</div>
+  </a>
+  <a href="bug.html" class="product-item" data-category="bug">
+    <img src="bug.jpg" alt="Bug WA">
+    <h3>Bug WA</h3>
+    <div class="product-category">Bug Whatsapp</div>
+    <div class="status tidak-tersedia">Tidak Tersedia</div>
+  </a>
+  <a href="unbanwa.html" class="product-item" data-category="unban">
+    <img src="unbanwa.jpg" alt="Unban WA">
+    <h3>Unban WA</h3>
+    <div class="product-category">Unbaned Whatsapp</div>
+    <div class="status tersedia">Tersedia</div>
+  </a>
+</div>
+
+<footer class="footer">
+  © 2025 SiiPStore. All Rights Reserved.
+</footer>
+
+<script>
+  const tabs = document.querySelectorAll('.tab');
+  const products = document.querySelectorAll('.product-item');
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      tabs.forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      const filter = tab.getAttribute('data-filter');
+      products.forEach(p => {
+        const category = p.getAttribute('data-category');
+        p.style.display = (filter === 'all' || filter === category) ? 'block' : 'none';
+      });
+    });
+  });
+
+  const slides = document.querySelectorAll('.slide');
+  const dots = document.querySelectorAll('.dot');
+  let currentSlide = 0;
+
+  function showSlide(index) {
+    if (index < 0) index = slides.length - 1;
+    if (index >= slides.length) index = 0;
+    currentSlide = index;
+    slides.forEach((slide, i) => {
+      slide.style.display = i === currentSlide ? 'block' : 'none';
+    });
+    dots.forEach(dot => dot.classList.remove('active'));
+    dots[currentSlide].classList.add('active');
+  }
+
+  function moveSlide(index) {
+    showSlide(index);
+  }
+
+  setInterval(() => {
+    moveSlide(currentSlide + 1);
+  }, 5000);
+
+  document.addEventListener('DOMContentLoaded', () => {
+    showSlide(currentSlide);
+  });
+</script>
+
+</body>
+</html>

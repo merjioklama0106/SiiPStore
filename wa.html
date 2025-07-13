@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Order Jasa Sosmed</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: sans-serif;
+      background: #000;
+      color: #fff;
+      padding-bottom: 80px;
+    }
+
+    .btn-back {
+      position: fixed;
+      top: 15px;
+      left: 15px;
+      z-index: 10;
+      background: rgba(0,0,0,0.6);
+      border: 2px solid #00aaff;
+      border-radius: 20px;
+      padding: 8px 14px;
+      color: #00aaff;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .product-logo-wrapper {
+      margin-top: 70px;
+      text-align: center;
+    }
+    .product-logo {
+      width: 100px;
+      height: 100px;
+      margin: auto;
+      border-radius: 50%;
+      overflow: hidden;
+      animation: pulse 2s infinite;
+      border: 3px solid #333;
+    }
+    .product-logo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+
+    .category-banner {
+      margin: 20px;
+      padding: 15px;
+      border-radius: 12px;
+      background: #111;
+      text-align: center;
+    }
+
+    .category-banner h2 {
+      font-size: 22px;
+      font-weight: 900;
+      background: linear-gradient(90deg,#ff0080,#7928ca,#2afadf,#00ff6a);
+      background-size: 300% 300%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: colorShift 5s ease infinite;
+    }
+
+    @keyframes colorShift {
+      0%{background-position:0% 50%}
+      50%{background-position:100% 50%}
+      100%{background-position:0% 50%}
+    }
+
+    .form-background {
+      background: #111;
+      margin: 20px;
+      padding: 20px;
+      border-radius: 14px;
+    }
+
+    input, .custom-select-input {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 15px;
+      background: #222;
+      color: white;
+      border: 1px solid #333;
+      border-radius: 10px;
+    }
+
+    label {
+      font-weight: bold;
+      display: block;
+      margin: 10px 0 5px;
+    }
+
+    .dropdown-list {
+      display: none;
+      background: #111;
+      border: 1px solid #333;
+      border-radius: 10px;
+      margin-top: -10px;
+      z-index: 10;
+      position: relative;
+      max-height: 150px;
+      overflow-y: auto;
+    }
+
+    .dropdown-item {
+      padding: 10px;
+      border-bottom: 1px solid #222;
+      cursor: pointer;
+    }
+
+    .dropdown-item:hover {
+      background: #333;
+    }
+
+    .total-harga {
+      font-weight: bold;
+      font-size: 16px;
+      margin-top: 10px;
+    }
+
+    .deskripsi-panduan {
+      background: #222;
+      padding: 10px;
+      border-left: 3px solid #00aaff;
+      border-radius: 8px;
+      font-size: 14px;
+      margin-top: 20px;
+    }
+
+    .btn-order {
+      display: block;
+      width: calc(100% - 40px);
+      margin: 20px auto;
+      padding: 12px;
+      background: #007bff;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-weight: bold;
+      font-size: 16px;
+    }
+
+    .popup {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.8);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 999;
+    }
+
+    .popup-content {
+      background: #000;
+      color: white;
+      padding: 20px;
+      border-radius: 12px;
+      width: 90%;
+      max-width: 350px;
+      position: relative;
+      border: 2px solid #888;
+    }
+
+    .popup-content h3 {
+      margin-top: 0;
+    }
+
+    .popup-content button {
+      margin-top: 10px;
+      width: 100%;
+      padding: 10px;
+      border: none;
+      font-weight: bold;
+      border-radius: 8px;
+    }
+
+    .btn-pesan {
+      background: #00c897;
+      color: white;
+    }
+
+    .btn-batal {
+      background: red;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+
+<button class="btn-back" onclick="window.location.href='sosmed.html'">Back</button>
+
+<div class="product-logo-wrapper">
+  <div class="product-logo">
+    <img src="whatsapp.jpg" alt="WhatsApp Logo">
+  </div>
+</div>
+
+<div class="category-banner">
+  <h2>JASA SUNTIK SOSMED WHATSAPP</h2>
+</div>
+
+<div class="form-background">
+  <label>Link Target</label>
+  <input type="text" id="link" placeholder="Masukkan link target">
+
+  <label>Pilih Layanan</label>
+  <div class="custom-select-input" onclick="toggleDropdown('layanan-list')">Pilih layanan</div>
+  <div class="dropdown-list" id="layanan-list">
+    <div class="dropdown-item" onclick="selectLayanan('channel')">WhatsApp Channel Member [Global] </div>
+    <div class="dropdown-item" onclick="selectLayanan('emoji')">WhatsApp Channel Reacht Emoji</div>
+  </div>
+
+  <label>Pilih Jumlah Pesanan</label>
+  <div class="custom-select-input" onclick="toggleDropdown('jumlah-list')">Pilih jumlah</div>
+  <div class="dropdown-list" id="jumlah-list"></div>
+
+  <div class="total-harga">Total: Rp <span id="total">0</span></div>
+
+  <div class="deskripsi-panduan">
+    Pilih layanan dan jumlah pesanan. Pastikan data yang Anda masukkan benar sebelum melanjutkan.
+  </div>
+</div>
+
+<button class="btn-order" onclick="orderSekarang()">Lanjut Order</button>
+
+<div class="popup" id="popup-confirm">
+  <div class="popup-content">
+    <h3>Konfirmasi</h3>
+    <div id="summary-text"></div>
+
+    <label>Nama</label>
+    <input type="text" id="nama" placeholder="Nama kamu">
+
+    <label>Metode Pembayaran</label>
+    <div class="custom-select-input" onclick="toggleDropdown('metode-list')">Pilih Metode</div>
+    <div class="dropdown-list" id="metode-list">
+      <div class="dropdown-item" onclick="selectMetode('DANA')">DANA</div>
+      <div class="dropdown-item" onclick="selectMetode('GOPAY')">GOPAY</div>
+      <div class="dropdown-item" onclick="selectMetode('QRIS')">QRIS</div>
+    </div>
+
+    <button class="btn-pesan" onclick="kirimWhatsApp()">Pesan Sekarang</button>
+    <button class="btn-batal" onclick="document.getElementById('popup-confirm').style.display='none'">Batal</button>
+  </div>
+</div>
+
+<script>
+  let layananDipilih = '', jumlahDipilih = 0, metodeDipilih = '';
+
+  function toggleDropdown(id) {
+    document.querySelectorAll('.dropdown-list').forEach(el => {
+      if (el.id !== id) el.style.display = 'none';
+    });
+    const dropdown = document.getElementById(id);
+    dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+  }
+
+  function selectLayanan(layanan) {
+    layananDipilih = layanan;
+    document.querySelector('[onclick*="layanan-list"]').innerText = layanan === 'channel' ? 'WhatsApp Channel Member' : 'WhatsApp Reacht Emoji';
+    document.getElementById('layanan-list').style.display = 'none';
+
+    const jumlahList = document.getElementById('jumlah-list');
+    jumlahList.innerHTML = '';
+    const jumlahs = layanan === 'channel' ? [100,200,300,400,500,600,700,800,900,1000] : [50,100,150,200,250,300,350,400,450,500,550,600,650,700,750,800,850,900,950,1000];
+    jumlahs.forEach(j => {
+      const item = document.createElement('div');
+      item.className = 'dropdown-item';
+      item.innerText = j;
+      item.onclick = () => selectJumlah(j);
+      jumlahList.appendChild(item);
+    });
+  }
+
+  function selectJumlah(jml) {
+    jumlahDipilih = jml;
+    document.querySelector('[onclick*="jumlah-list"]').innerText = jml;
+    document.getElementById('jumlah-list').style.display = 'none';
+    updateTotal();
+  }
+
+  function updateTotal() {
+    let total = 0;
+    if (layananDipilih === 'channel') {
+      total = 6000 + ((jumlahDipilih - 100)/100) * 3000;
+    } else if (layananDipilih === 'emoji') {
+      total = jumlahDipilih * 30;
+    }
+    document.getElementById('total').innerText = total;
+  }
+
+  function selectMetode(val) {
+    metodeDipilih = val;
+    document.querySelector('[onclick*="metode-list"]').innerText = val;
+    document.getElementById('metode-list').style.display = 'none';
+  }
+
+  function orderSekarang() {
+    const link = document.getElementById('link').value.trim();
+    if (!link || !layananDipilih || !jumlahDipilih) {
+      alert('Harap isi data ini terlebih dahulu!');
+      return;
+    }
+    const layananText = layananDipilih === 'channel' ? 'WhatsApp Channel Member' : 'WhatsApp Channel Reacht Emoji';
+    const harga = document.getElementById('total').innerText;
+    document.getElementById('summary-text').innerHTML = `Layanan: ${layananText}<br>Jumlah: ${jumlahDipilih}<br>Total: Rp ${harga}`;
+    document.getElementById('popup-confirm').style.display = 'flex';
+  }
+
+  function kirimWhatsApp() {
+    const nama = document.getElementById('nama').value.trim();
+    const harga = document.getElementById('total').innerText;
+    const link = document.getElementById('link').value.trim();
+    const layananText = layananDipilih === 'channel' ? 'WhatsApp Channel Member' : 'WhatsApp Reacht Emoji';
+
+    if (!nama || !metodeDipilih) return alert('Nama dan metode pembayaran wajib diisi!');
+
+    const msg = `Hallo Admin Saya Ingin Order :\n` +
+      `LAYANAN : ${layananText}\n` +
+      `JUMLAH : ${jumlahDipilih}\n` +
+      `HARGA : Rp ${harga}\n` +
+      `LINK : ${link}\n` +
+      `NAMA : ${nama}\n` +
+      `PEMBAYARAN : ${metodeDipilih}`;
+
+    window.open(`https://wa.me/6283189341353?text=${encodeURIComponent(msg)}`, '_blank');
+  }
+</script>
+
+</body>
+</html>
